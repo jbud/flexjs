@@ -104,6 +104,17 @@ function parseDist(d, ism = true) {
   return r;
 }
 
+function calculateDensityCorrection(density, AltCorrectionsTable, perfDistDiffTable) {
+    let densityCorrection;
+
+    for (let i=0; i<AltCorrectionsTable; i++){
+        densityCorrection += ((density > AltCorrectionsTable[i]) ? perfDistDiffTable[i] : (density / 200) * (perfDistDiffTable[i] / 100))
+    }
+    densityCorrection += ((density < AltCorrectionsTable[3]) ? 0 : ((density - AltCorrectionsTable[3]) / 200) * (perfDistDiffTable[4] / 100));
+
+    return (densityCorrection >= 0) ? densityCorrection : 0;
+}
+
 function calculateFlexDist(){
   
   let density = calculateDensityAlt();
@@ -147,14 +158,7 @@ function calculateFlexDist(){
     (currentAircraft.to8k - currentAircraft.to6k) * 1.53
   ];
 
-  // please refactor this monstrosity 
-  let densityCorrection = ((density > AltCorrectionsTable[0]) ? perfDistDiffTable[0] : (density / 200) * (perfDistDiffTable[0] / 100)) + 
-    ((density > AltCorrectionsTable[1]) ? perfDistDiffTable[1] : (density / 200) * (perfDistDiffTable[1] / 100)) +
-    ((density > AltCorrectionsTable[2]) ? perfDistDiffTable[2] : (density / 200) * (perfDistDiffTable[2] / 100)) +
-    ((density > AltCorrectionsTable[3]) ? perfDistDiffTable[3] : (density / 200) * (perfDistDiffTable[3] / 100)) +
-    ((density < AltCorrectionsTable[3]) ? 0 : ((density - AltCorrectionsTable[3]) / 200) * (perfDistDiffTable[4] / 100));
-  
-  densityCorrection = (densityCorrection >= 0) ? densityCorrection : 0;
+  let densityCorrection = calculateDensityCorrection(density, AltCorrectionsTable, perfDistDiffTable);
   
   let perfWeight = parseWeight(tow, isKG);
 
