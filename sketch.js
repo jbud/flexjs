@@ -13,6 +13,7 @@ let iantiice;
 let ipacks;
 let icalculate;
 let iflaps;
+let iairframe;
 
 let iKG,iHP,iM, outf, outd;
 let inpoffsetw = 15;
@@ -73,6 +74,11 @@ function setup() {
   iflaps.option("2");
   iflaps.option("3");
   
+  iairframe = createSelect();
+  iairframe.position((width - inpSize) / 3,  (height + 80)*2 -45);
+  iairframe.option("A320-200n");
+  iairframe.option("A330-900n");
+  
   iKG = createCheckbox('KG', true);
   iKG.position(((width - inpSize+textOffset-50) / 2) + inpoffsetw, 130 + height / 2);
   iHP = createCheckbox('HPA', true);
@@ -81,7 +87,7 @@ function setup() {
   iM.position(((width - inpSize+textOffset-50) / 2) + inpoffsetw, 10 + height / 2);
   
   icalculate = createButton("Calculate");
-  icalculate.position((width - inpSize) / 2,  (height + 80)*2 -50);
+  icalculate.position((width - inpSize) / 1.5,  (height + 80)*2 -50);
   icalculate.mousePressed(onUpdate);
 }
 function onUpdate(){
@@ -116,6 +122,19 @@ function onUpdate(){
     case "1 + F":
       flaps = 1;
   }
+  /*
+  "A320-200n");
+  iairframe.option("A330-900n");
+  */
+  
+  switch(iairframe.value()){
+    case "A330-900n":
+      currentAircraft = a339;
+      break;
+    default:
+    case "A320-200n":
+      currentAircraft = a20n;
+  }
 
   isKG = true;
   isHP = true;
@@ -136,7 +155,8 @@ function draw() {
   text("feet", ((width - inpSize+textOffset-50) / 2) +inpoffsetw, height / 2);
   text("°C", ((width - inpSize+textOffset-50) / 2) + inpoffsetw, 90+height / 2);
   textSize(20);
-  text("@",((width - inpSize+textOffset-50) / 2) + inpoffsetw, 60 + height / 2)
+  text("@",((width - inpSize+textOffset-50) / 2) + inpoffsetw, 60 + height / 2);
+  text("Airframe:", (width - inpSize-textOffset) / 2, 325 + height / 2);
   textSize(24);
   text("Winds",(width - inpSize-textOffset) / 2, 60 + height / 2);
   text("RW Heading",(width - inpSize-textOffset) / 2, -30 + height / 2);

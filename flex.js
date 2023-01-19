@@ -25,6 +25,33 @@ let a20n = {
   to8k: 2330
 };
 
+let a339 = {
+    isaInc: 15,
+    vrisa: 150,
+    towt1isa: 170000,
+    towt2isa: 200000,
+    towt3isa: 230000,
+    todist1: 1680,
+    todist2: 1860,
+    todist3: 2310,
+    todist1isa: 1770,
+    todist2isa: 1960,
+    todist3isa: 2420,
+    toaltAdj: 100,
+    tmaxflex: 60,
+    trefaice: 30,
+    engThrust: 10032,
+    f1: 10,
+    f2: 1e-7,
+    f3: -5,
+    to2k: 1950,
+    to4k: 2095,
+    to6k: 2300,
+    to8k: 2900
+}
+
+let currentAircraft = a20n;
+
 let flex = 0;
 let error = "";
 let availRunway = 2995;
@@ -81,16 +108,16 @@ function calculateFlexDist(){
   
   let density = calculateDensityAlt();
   
-  let towt1isa = a20n.towt1isa;
-  let towt2isa = a20n.towt2isa;
-  let towt3isa = a20n.towt3isa;
+  let towt1isa = currentAircraft.towt1isa;
+  let towt2isa = currentAircraft.towt2isa;
+  let towt3isa = currentAircraft.towt3isa;
   
-  let TREF = a20n.trefaice + (runwayAltitude / 1000 * 2);
+  let TREF = currentAircraft.trefaice + (runwayAltitude / 1000 * 2);
   let ISA = calculateISA();
   let minFlex = (TREF > oat) ? Math.floor(TREF) : oat + 1;
-  let maxFlex = a20n.tmaxflex + oat - ISA;
+  let maxFlex = currentAircraft.tmaxflex + oat - ISA;
   let ISAZero = 0 + oat - ISA;
-  let ISAPlus = a20n.isaInc + oat - ISA;
+  let ISAPlus = currentAircraft.isaInc + oat - ISA;
   let ISAPlus1 = ISAPlus + 1;
   let headwind = cos(radians(windHeading-(runwayHeading * 10))) * windKts;
   
@@ -113,11 +140,11 @@ function calculateFlexDist(){
   ];
   
   let perfDistDiffTable = [
-    a20n.to2k - a20n.todist2,
-    a20n.to4k - a20n.to2k,
-    a20n.to6k - a20n.to4k,
-    a20n.to8k - a20n.to6k,
-    (a20n.to8k - a20n.to6k) * 1.53
+    currentAircraft.to2k - currentAircraft.todist2,
+    currentAircraft.to4k - currentAircraft.to2k,
+    currentAircraft.to6k - currentAircraft.to4k,
+    currentAircraft.to8k - currentAircraft.to6k,
+    (currentAircraft.to8k - currentAircraft.to6k) * 1.53
   ];
 
   // please refactor this monstrosity 
@@ -131,25 +158,25 @@ function calculateFlexDist(){
   
   let perfWeight = parseWeight(tow, isKG);
 
-  let distanceByDensityBelowISA = densityCorrection-(densityCorrection-(densityCorrection/100*(perfWeight/(towt2isa / 100 )))) / 100 * a20n.toaltAdj;
+  let distanceByDensityBelowISA = densityCorrection-(densityCorrection-(densityCorrection/100*(perfWeight/(towt2isa / 100 )))) / 100 * currentAircraft.toaltAdj;
   let distanceByDensityAboveISA = distanceByDensityBelowISA; // force for now, we'll revisit
   
   let distanceByDensity = (perfWeight < towt2isa) ? distanceByDensityBelowISA : distanceByDensityAboveISA;
   
   // ARE YOU ON CRACK? 
-  let seedModifier1 = (((perfWeight < towt2isa) ? (a20n.todist2 - a20n.todist1) / (towt2isa - towt1isa) * 
-    (perfWeight-towt1isa) : (a20n.todist2 - a20n.todist1) / (towt2isa - towt1isa) * (towt2isa-towt1isa)) +
-    ((perfWeight < towt2isa) ? 0 : (perfWeight<towt3isa) ? (a20n.todist3 - a20n.todist2) / (towt3isa - towt2isa) * 
-    (perfWeight - towt2isa) : (a20n.todist3 - a20n.todist2) / (towt3isa - towt2isa) * (towt3isa-towt2isa)) +
-    ((perfWeight < towt3isa) ? 0 : ((a20n.todist3 - a20n.todist2) / (towt3isa - towt2isa) * 1.5) * (perfWeight-towt3isa))) + 
-    a20n.todist1;
+  let seedModifier1 = (((perfWeight < towt2isa) ? (currentAircraft.todist2 - currentAircraft.todist1) / (towt2isa - towt1isa) * 
+    (perfWeight-towt1isa) : (currentAircraft.todist2 - currentAircraft.todist1) / (towt2isa - towt1isa) * (towt2isa-towt1isa)) +
+    ((perfWeight < towt2isa) ? 0 : (perfWeight<towt3isa) ? (currentAircraft.todist3 - currentAircraft.todist2) / (towt3isa - towt2isa) * 
+    (perfWeight - towt2isa) : (currentAircraft.todist3 - currentAircraft.todist2) / (towt3isa - towt2isa) * (towt3isa-towt2isa)) +
+    ((perfWeight < towt3isa) ? 0 : ((currentAircraft.todist3 - currentAircraft.todist2) / (towt3isa - towt2isa) * 1.5) * (perfWeight-towt3isa))) + 
+    currentAircraft.todist1;
   
-  let seedModifier2 = (((perfWeight<towt2isa) ? (a20n.todist2isa - a20n.todist1isa) / (towt2isa-towt1isa) * 
-    (perfWeight - towt1isa) : (a20n.todist2isa - a20n.todist1isa) / (towt2isa-towt1isa) * (towt2isa - towt1isa)) + 
-    ((perfWeight < towt2isa) ? 0 : (perfWeight<towt3isa) ? (a20n.todist3isa - a20n.todist2isa) / (towt3isa - towt2isa) * 
-    (perfWeight - towt2isa) : (a20n.todist3isa - a20n.todist2isa) / (towt3isa - towt2isa) * (towt3isa-towt2isa)) +
-    ((perfWeight < towt3isa) ? 0 : ((a20n.todist3isa - a20n.todist2isa) / (towt3isa - towt2isa) * 1.5) * (perfWeight-towt3isa))) + 
-    a20n.todist1isa;
+  let seedModifier2 = (((perfWeight<towt2isa) ? (currentAircraft.todist2isa - currentAircraft.todist1isa) / (towt2isa-towt1isa) * 
+    (perfWeight - towt1isa) : (currentAircraft.todist2isa - currentAircraft.todist1isa) / (towt2isa-towt1isa) * (towt2isa - towt1isa)) + 
+    ((perfWeight < towt2isa) ? 0 : (perfWeight<towt3isa) ? (currentAircraft.todist3isa - currentAircraft.todist2isa) / (towt3isa - towt2isa) * 
+    (perfWeight - towt2isa) : (currentAircraft.todist3isa - currentAircraft.todist2isa) / (towt3isa - towt2isa) * (towt3isa-towt2isa)) +
+    ((perfWeight < towt3isa) ? 0 : ((currentAircraft.todist3isa - currentAircraft.todist2isa) / (towt3isa - towt2isa) * 1.5) * (perfWeight-towt3isa))) + 
+    currentAircraft.todist1isa;
 
   
   let growthSeed = [
@@ -164,7 +191,7 @@ function calculateFlexDist(){
     growthTrend[0], 
     growthTrend[1], 
     growthTrend[2], 
-    Math.pow(growthTrend[3],(a20n.engThrust/10000))
+    Math.pow(growthTrend[3],(currentAircraft.engThrust/10000))
 ]; 
   
   let trendWithModifiers = trend(
@@ -186,13 +213,13 @@ function calculateFlexDist(){
     ]
   );
  
-  let isaCorrection = (ISA > a20n.isaInc) ? trendWithModifiers[5] : growthTrend[0]; 
+  let isaCorrection = (ISA > currentAircraft.isaInc) ? trendWithModifiers[5] : growthTrend[0]; 
   
   let flapCorr = isaCorrection + (isaCorrection/100) * calculateFlapEffect();
   
   let windLen = (headwind > 0) ? 
-    (flapCorr - ((flapCorr / 100) * (headwind / (a20n.vrisa / 100))) / 2) : 
-    flapCorr - ((flapCorr / 100)*(headwind / (a20n.vrisa / 150)));
+    (flapCorr - ((flapCorr / 100) * (headwind / (currentAircraft.vrisa / 100))) / 2) : 
+    flapCorr - ((flapCorr / 100)*(headwind / (currentAircraft.vrisa / 150)));
   
   let totDist = windLen;
   totDist += (antiIce) ? ((windLen /100)*3) : 0;
@@ -286,13 +313,13 @@ function calculateFlapEffect(){
   switch(flaps){
     default:
     case 1: 
-      fe = a20n.f1;
+      fe = currentAircraft.f1;
       break;
     case 2:
-      fe = a20n.f2;
+      fe = currentAircraft.f2;
       break;
     case 3:
-      fe = a20n.f3;
+      fe = currentAircraft.f3;
       break;
   }
   
