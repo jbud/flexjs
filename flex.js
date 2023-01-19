@@ -116,9 +116,9 @@ function calculateDensityCorrection(density, AltCorrectionsTable, perfDistDiffTa
 }
 
 function plantSeeds(perfWeight, a) {
-    let seedModifierstd;
-    let seedModifierisa;
-    
+    let seedModifierstd=0;
+    let seedModifierisa=0;
+
     let stdSeedTable = [
         ((perfWeight < a.towt2isa) ? (a.todist2 - a.todist1) / (a.towt2isa - a.towt1isa) * (perfWeight - a.towt1isa) : (a.todist2 - a.todist1) / (a.towt2isa - a.towt1isa) * (a.towt2isa - a.towt1isa)),
         ((perfWeight < a.towt2isa) ? 0 : (perfWeight < a.towt3isa) ? (a.todist3 - a.todist2) / (a.towt3isa - a.towt2isa) * (perfWeight - a.towt2isa) : (a.todist3 - a.todist2) / (a.towt3isa - a.towt2isa) * (a.towt3isa - a.towt2isa)),
@@ -133,11 +133,11 @@ function plantSeeds(perfWeight, a) {
         a.todist1isa
     ];
 
-    for (let s in stdSeedTable)
-        seedModifierstd += s;
+    for (let i=0; i<stdSeedTable.length; i++)
+        seedModifierstd += stdSeedTable[i];
 
-    for (let s in isaSeedTable)
-        seedModifierisa += s;
+    for (let i=0; i<isaSeedTable.length; i++)
+        seedModifierisa += isaSeedTable[i];
 
     return [seedModifierstd, seedModifierisa];
 }
