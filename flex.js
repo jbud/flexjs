@@ -115,6 +115,33 @@ function calculateDensityCorrection(density, AltCorrectionsTable, perfDistDiffTa
     return (densityCorrection >= 0) ? densityCorrection : 0;
 }
 
+function plantSeeds(perfWeight, a) {
+    let seedModifierstd;
+    let seedModifierisa;
+
+    let stdSeedTable = [
+        ((perfWeight < a.towt2isa) ? (todist2 - a.todist1) / (a.towt2isa - a.towt1isa) * (perfWeight - a.towt1isa) : (todist2 - a.todist1) / (a.towt2isa - a.towt1isa) * (a.towt2isa - a.towt1isa)),
+        ((perfWeight < a.towt2isa) ? 0 : (perfWeight < a.towt3isa) ? (a.todist3 - a.todist2) / (a.towt3isa - a.towt2isa) * (perfWeight - a.towt2isa) : (a.todist3 - a.todist2) / (a.towt3isa - a.towt2isa) * (a.towt3isa - a.towt2isa)),
+        ((perfWeight < a.towt3isa) ? 0 : ((a.todist3 - a.todist2) / (a.towt3isa - a.towt2isa) * 1.5) * (perfWeight - a.towt3isa)),
+        a.todist1
+    ];
+
+    let isaSeedTable = [
+        ((perfWeight < a.towt2isa) ? (a.todist2isa - a.todist1isa) / (a.towt2isa - a.towt1isa) * (perfWeight - a.towt1isa) : (a.todist2isa - a.todist1isa) / (a.towt2isa - a.towt1isa) * (a.towt2isa - a.towt1isa)),
+        ((perfWeight < a.towt2isa) ? 0 : (perfWeight < a.towt3isa) ? (a.todist3isa - a.todist2isa) / (a.towt3isa - a.towt2isa) * (perfWeight - a.towt2isa) : (a.todist3isa - a.todist2isa) / (a.towt3isa - a.towt2isa) * (a.towt3isa - a.towt2isa)),
+        ((perfWeight < a.towt3isa) ? 0 : ((a.todist3isa - a.todist2isa) / (a.towt3isa - a.towt2isa) * 1.5) * (perfWeight - a.towt3isa)),
+        a.todist1isa
+    ];
+
+    for (let s in stdSeedTable)
+        seedModifierstd += s;
+
+    for (let s in isaSeedTable)
+        seedModifierisa += s;
+
+    return [seedModifierstd, seedModifierisa];
+}
+
 function calculateFlexDist(){
   
   let density = calculateDensityAlt();
@@ -167,28 +194,19 @@ function calculateFlexDist(){
   
   let distanceByDensity = (perfWeight < towt2isa) ? distanceByDensityBelowISA : distanceByDensityAboveISA;
   
-  // ARE YOU ON CRACK? 
-  let seedModifier1 = (((perfWeight < towt2isa) ? (currentAircraft.todist2 - currentAircraft.todist1) / (towt2isa - towt1isa) * 
-    (perfWeight-towt1isa) : (currentAircraft.todist2 - currentAircraft.todist1) / (towt2isa - towt1isa) * (towt2isa-towt1isa)) +
-    ((perfWeight < towt2isa) ? 0 : (perfWeight<towt3isa) ? (currentAircraft.todist3 - currentAircraft.todist2) / (towt3isa - towt2isa) * 
-    (perfWeight - towt2isa) : (currentAircraft.todist3 - currentAircraft.todist2) / (towt3isa - towt2isa) * (towt3isa-towt2isa)) +
-    ((perfWeight < towt3isa) ? 0 : ((currentAircraft.todist3 - currentAircraft.todist2) / (towt3isa - towt2isa) * 1.5) * (perfWeight-towt3isa))) + 
-    currentAircraft.todist1;
-  
-  let seedModifier2 = (((perfWeight<towt2isa) ? (currentAircraft.todist2isa - currentAircraft.todist1isa) / (towt2isa-towt1isa) * 
-    (perfWeight - towt1isa) : (currentAircraft.todist2isa - currentAircraft.todist1isa) / (towt2isa-towt1isa) * (towt2isa - towt1isa)) + 
-    ((perfWeight < towt2isa) ? 0 : (perfWeight<towt3isa) ? (currentAircraft.todist3isa - currentAircraft.todist2isa) / (towt3isa - towt2isa) * 
-    (perfWeight - towt2isa) : (currentAircraft.todist3isa - currentAircraft.todist2isa) / (towt3isa - towt2isa) * (towt3isa-towt2isa)) +
-    ((perfWeight < towt3isa) ? 0 : ((currentAircraft.todist3isa - currentAircraft.todist2isa) / (towt3isa - towt2isa) * 1.5) * (perfWeight-towt3isa))) + 
-    currentAircraft.todist1isa;
 
+  let seedModifiers = plantSeeds(perfWeight, currentAircraft);
+
+  // ARE YOU ON CRACK? 
+  let seedModStd = seedModifiers[0];
   
+  let seedModIsa = seedModifiers[1];
+
   let growthSeed = [
-    seedModifier1 + distanceByDensity, 
-    seedModifier2 + distanceByDensity
+    seedModStd + distanceByDensity, 
+    seedModIsa + distanceByDensity
   ];
 
-  
   let growthTrend = growth(growthSeed, [flexTrendModifierTable[1], flexTrendModifierTable[2]], flexTrendModifierTable);
 
   let trendBase = [
