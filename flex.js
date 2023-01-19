@@ -146,29 +146,20 @@ function calculateFlexDist(){
   
   let density = calculateDensityAlt();
   
-  let towt1isa = currentAircraft.towt1isa;
-  let towt2isa = currentAircraft.towt2isa;
-  let towt3isa = currentAircraft.towt3isa;
-  
   let TREF = currentAircraft.trefaice + (runwayAltitude / 1000 * 2);
   let ISA = calculateISA();
-  let minFlex = (TREF > oat) ? Math.floor(TREF) : oat + 1;
-  let maxFlex = currentAircraft.tmaxflex + oat - ISA;
-  let ISAZero = 0 + oat - ISA;
-  let ISAPlus = currentAircraft.isaInc + oat - ISA;
-  let ISAPlus1 = ISAPlus + 1;
-  let headwind = cos(radians(windHeading-(runwayHeading * 10))) * windKts;
   
   let flexTrendModifierTable = [
     oat,
-    ISAZero,
-    ISAPlus,
-    ISAPlus1,
-    minFlex,
+    0 + oat - ISA,
+    currentAircraft.isaInc + oat - ISA,
+    1 + currentAircraft.isaInc + oat - ISA,
+    (TREF > oat) ? Math.floor(TREF) : oat + 1,
     33,
-    maxFlex,
+    currentAircraft.tmaxflex + oat - ISA,
     oat
   ];
+
   let AltCorrectionsTable = [
     2000,
     4000,
@@ -189,15 +180,14 @@ function calculateFlexDist(){
   
   let perfWeight = parseWeight(tow, isKG);
 
-  let distanceByDensityBelowISA = densityCorrection-(densityCorrection-(densityCorrection/100*(perfWeight/(towt2isa / 100 )))) / 100 * currentAircraft.toaltAdj;
-  let distanceByDensityAboveISA = distanceByDensityBelowISA; // force for now, we'll revisit
+  let altBelowToWt2ISA = densityCorrection-(densityCorrection-(densityCorrection/100*(perfWeight/(currentAircraft.towt2isa / 100 )))) / 100 * currentAircraft.toaltAdj;
+  let altAboveToWt2ISA = altBelowToWt2ISA; // the correction is the same above or below for the currently implemented aircraft
   
-  let distanceByDensity = (perfWeight < towt2isa) ? distanceByDensityBelowISA : distanceByDensityAboveISA;
+  let distanceByDensity = (perfWeight < currentAircraft.towt2isa) ? altBelowToWt2ISA : altAboveToWt2ISA;
   
 
   let seedModifiers = plantSeeds(perfWeight, currentAircraft);
 
-  // ARE YOU ON CRACK? 
   let seedModStd = seedModifiers[0];
   
   let seedModIsa = seedModifiers[1];
@@ -207,14 +197,21 @@ function calculateFlexDist(){
     seedModIsa + distanceByDensity
   ];
 
-  let growthTrend = growth(growthSeed, [flexTrendModifierTable[1], flexTrendModifierTable[2]], flexTrendModifierTable);
+  let growthTrend = growth(
+    growthSeed, 
+    [
+        flexTrendModifierTable[1], 
+        flexTrendModifierTable[2]
+    ], 
+    flexTrendModifierTable
+  );
 
   let trendBase = [
     growthTrend[0], 
     growthTrend[1], 
     growthTrend[2], 
     Math.pow(growthTrend[3],(currentAircraft.engThrust/10000))
-]; 
+  ]; 
   
   let trendWithModifiers = trend(
     [
@@ -238,6 +235,8 @@ function calculateFlexDist(){
   let isaCorrection = (ISA > currentAircraft.isaInc) ? trendWithModifiers[5] : growthTrend[0]; 
   
   let flapCorr = isaCorrection + (isaCorrection/100) * calculateFlapEffect();
+  
+  let headwind = cos(radians(windHeading - (runwayHeading * 10))) * windKts;
   
   let windLen = (headwind > 0) ? 
     (flapCorr - ((flapCorr / 100) * (headwind / (currentAircraft.vrisa / 100))) / 2) : 
@@ -302,32 +301,8 @@ function calculateFlexDist(){
     ]
   );
   
-  /*
-  
-  console.log(
-    "availRunway " + availRunway + "\n" +
-    "windHeading " + windHeading + "\n" +
-    "windKts " + windKts + "\n" +
-    "tow " + tow + "\n" +
-    "baro " + baro + "\n" +
-    "oat " + oat + "\n" +
-    "flaps " + flaps + "\n" +
-    "runwayHeading " + runwayHeading + "\n" +
-    "runwayAltitude " + runwayAltitude + "\n" +
-    "antiIce " + antiIce + "\n" +
-    "packs " + packs + "\n"
-  );
-  
-  
-  console.log("Flex to temp "+ flex + "°")
-  console.log("Distance of runway used: "+Math.ceil(requiredRunway) + "m")
-  console.log("Available runway: " + availRunway+"m");
-  
- */
-  
   flex = flexTrendTable[6];
   requiredRunway = TakeoffDistanceTrendTable[4];
-  
 }
 
 function calculateFlapEffect(){
