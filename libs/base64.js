@@ -20,7 +20,7 @@ function b64ToUint6(nChr) {
     : 0
 }
 
-export function decodeToArray(base64string, blockSize) {
+function decodeToArray(base64string, blockSize) {
   var sB64Enc = base64string.replace(/[^A-Za-z0-9\+\/]/g, ''),
     nInLen = sB64Enc.length,
     nOutLen = blockSize
@@ -60,7 +60,7 @@ function uint6ToB64(nUint6) {
     : 65
 }
 
-export function encodeFromArray(bytes) {
+function encodeFromArray(bytes) {
   var eqLen = (3 - (bytes.length % 3)) % 3,
     sB64Enc = ''
 
@@ -96,7 +96,7 @@ export function encodeFromArray(bytes) {
  * @see https://tools.ietf.org/html/rfc4648#section-5
  */
 
-export function encodeFromArrayUrlSafe(bytes) {
+function encodeFromArrayUrlSafe(bytes) {
   return encodeURIComponent(
     encodeFromArray(bytes)
       .replace(/\+/g, '-')
@@ -104,7 +104,7 @@ export function encodeFromArrayUrlSafe(bytes) {
   )
 }
 
-export function decodeToArrayUrlSafe(base64string) {
+function decodeToArrayUrlSafe(base64string) {
   return decodeToArray(
     decodeURIComponent(base64string)
       .replace(/-/g, '+')

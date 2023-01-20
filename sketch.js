@@ -1,5 +1,4 @@
-import { compressUrlSafe } from './libs/lzma-url.mjs'
-import { decompressUrlSafe } from './libs/lzma-url.mjs'
+
 
 let inpSize = 100;
 let textOffset = 275;
