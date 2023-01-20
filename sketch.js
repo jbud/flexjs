@@ -91,7 +91,6 @@ function setup() {
   icalculate = createButton("Calculate");
   icalculate.position((width - inpSize) / 1.5,  (height + 80)*2 -50);
   icalculate.mousePressed(onUpdate);
-  loadData();
 }
 
 function saveData(data){
@@ -204,6 +203,7 @@ function onUpdate(){
 }
 
 function draw() {
+  loadData();
   let height = 130;
   background(0)
   fill('white');
