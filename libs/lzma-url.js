@@ -29,14 +29,14 @@ function initDim(len) {
   a[len - 1] = undefined
   return a
 }
-function and(a, b) {
+function vand(a, b) {
   return makeFromBits(
     ~~Math.max(Math.min(a[1] / __4294967296, 2147483647), -2147483648) &
       ~~Math.max(Math.min(b[1] / __4294967296, 2147483647), -2147483648),
     lowBits_0(a) & lowBits_0(b)
   )
 }
-function compare(a, b) {
+function vcompare(a, b) {
   var nega, negb
   if (a[0] == b[0] && a[1] == b[1]) {
     return 0
@@ -49,7 +49,7 @@ function compare(a, b) {
   if (!nega && negb) {
     return 1
   }
-  if (sub(a, b)[1] < 0) {
+  if (vsub(a, b)[1] < 0) {
     return -1
   }
   return 1
@@ -156,7 +156,7 @@ function shru(a, n) {
   }
   return sr
 }
-function sub(a, b) {
+function vsub(a, b) {
   return vcreate(a[0] - b[0], a[1] - b[1])
 }
 
@@ -222,7 +222,7 @@ function $configure(this$static, encoder) {
 
 function $init(this$static, input, output, length_0, mode, enableEndMark) {
   var encoder, i
-  if (compare(length_0, N1_longLit) < 0)
+  if (vcompare(length_0, N1_longLit) < 0)
     throw new Error('invalid length ' + length_0)
   this$static.length_0 = length_0
   encoder = $Encoder({})
@@ -927,8 +927,8 @@ function $processDecoderChunk(this$static) {
   this$static.outBytesProcessed = this$static.decoder.nowPos64
   if (
     result ||
-    (compare(this$static.decoder.outSize, P0_longLit) >= 0 &&
-      compare(this$static.decoder.nowPos64, this$static.decoder.outSize) >= 0)
+    (vcompare(this$static.decoder.outSize, P0_longLit) >= 0 &&
+      vcompare(this$static.decoder.nowPos64, this$static.decoder.outSize) >= 0)
   ) {
     $Flush_0(this$static.decoder.m_OutWindow)
     $ReleaseStream(this$static.decoder.m_OutWindow)
@@ -1094,7 +1094,7 @@ function $CodeOneChunk(this$static) {
       } else this$static.rep0 = posSlot
     }
     if (
-      compare(fromInt(this$static.rep0), this$static.nowPos64) >= 0 ||
+      vcompare(fromInt(this$static.rep0), this$static.nowPos64) >= 0 ||
       this$static.rep0 >= this$static.m_DictionarySizeCheck
     ) {
       return -1
@@ -1615,7 +1615,7 @@ function $CodeOneBlock(this$static, inSize, outSize, finished) {
         return
       }
       if (
-        compare(sub(this$static.nowPos64, progressPosValuePrev), [4096, 0]) >= 0
+        vcompare(vsub(this$static.nowPos64, progressPosValuePrev), [4096, 0]) >= 0
       ) {
         this$static._finished = 0
         finished[0] = 0
@@ -2963,7 +2963,7 @@ function $Encode_3(this$static, probs, index, symbol) {
   } else {
     this$static.Low = vadd(
       this$static.Low,
-      and(fromInt(newBound), [4294967295, 0])
+      vand(fromInt(newBound), [4294967295, 0])
     )
     this$static.Range -= newBound
     probs[index] = ((prob - (prob >>> 5)) << 16) >> 16
@@ -3005,7 +3005,7 @@ function $Init_9(this$static) {
 function $ShiftLow(this$static) {
   var temp,
     LowHi = lowBits_0(shru(this$static.Low, 32))
-  if (LowHi != 0 || compare(this$static.Low, [4278190080, 0]) < 0) {
+  if (LowHi != 0 || vcompare(this$static.Low, [4278190080, 0]) < 0) {
     this$static._position = vadd(
       this$static._position,
       fromInt(this$static._cacheSize)
@@ -3018,7 +3018,7 @@ function $ShiftLow(this$static) {
     this$static._cache = lowBits_0(this$static.Low) >>> 24
   }
   ++this$static._cacheSize
-  this$static.Low = shl(and(this$static.Low, [16777215, 0]), 8)
+  this$static.Low = shl(vand(this$static.Low, [16777215, 0]), 8)
 }
 
 function GetPrice(Prob, symbol) {
