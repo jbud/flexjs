@@ -1,54 +1,41 @@
 const BARO_SEA = 1013; // 29.92 inhg
+let a20n, a339;
 
-let a20n = {
-  isaInc: 15,
-  vrisa: 142,
-  towt1isa: 50000,
-  towt2isa: 75000,
-  towt3isa: 85000,
-  todist1: 1000,
-  todist2: 1690,
-  todist3: 2300,
-  todist1isa: 1050,
-  todist2isa: 1750,
-  todist3isa: 2390,
-  toaltAdj: 100,
-  tmaxflex: 60,
-  trefaice: 30,
-  engThrust: 10031,
-  f1: 10,
-  f2: 1e-7,
-  f3: -5,
-  to2k: 1770,
-  to4k: 1920,
-  to6k: 2050,
-  to8k: 2330
-};
+let origin = window.location.origin + window.location.pathname;
 
-let a339 = {
-    isaInc: 15,
-    vrisa: 150,
-    towt1isa: 170000,
-    towt2isa: 200000,
-    towt3isa: 230000,
-    todist1: 1680,
-    todist2: 1860,
-    todist3: 2310,
-    todist1isa: 1770,
-    todist2isa: 1960,
-    todist3isa: 2420,
-    toaltAdj: 100,
-    tmaxflex: 60,
-    trefaice: 30,
-    engThrust: 10032,
-    f1: 10,
-    f2: 1e-7,
-    f3: -5,
-    to2k: 1950,
-    to4k: 2095,
-    to6k: 2300,
-    to8k: 2900
-}
+fetch('./airframes/a20n.json',{
+    headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Origin': origin
+        }
+    })
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (data) {
+        a20n = data;
+    })
+    .catch(function (err) {
+        console.log('error: ' + err);
+    });
+
+fetch('./airframes/a339.json',{
+    headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        }
+    })
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (data) {
+        a339 = data;
+    })
+    .catch(function (err) {
+        console.log('error: ' + err);
+    });
 
 let currentAircraft = a20n;
 
