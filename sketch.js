@@ -103,7 +103,7 @@ function saveData(data){
 }
 
 function loadData(){
-  let compressedSerializedData = window.history.state;
+  let compressedSerializedData = window.location.search;
   if (!compressedSerializedData) return false;
   if (compressedSerializedData.charAt(0)=="?") {
     compressedSerializedData = compressedSerializedData.substring(1);
