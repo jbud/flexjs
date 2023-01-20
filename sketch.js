@@ -1,3 +1,6 @@
+import { compressUrlSafe } from './libs/lzma-url.mjs'
+import { decompressUrlSafe } from './libs/lzma-url.mjs'
+
 let inpSize = 100;
 let textOffset = 275;
 
@@ -17,6 +20,8 @@ let iairframe;
 
 let iKG,iHP,iM, outf, outd;
 let inpoffsetw = 15;
+
+let data = {};
 
 function setup() {
   createCanvas(400, 400);
@@ -89,7 +94,48 @@ function setup() {
   icalculate = createButton("Calculate");
   icalculate.position((width - inpSize) / 1.5,  (height + 80)*2 -50);
   icalculate.mousePressed(onUpdate);
+  loadData();
 }
+
+function saveData(data){
+  const serializedData = JSON.stringify(data);
+  const compressedSerializedData = compressUrlSafe(serializedData);
+  window.history.pushState("?"+compressedSerializedData);
+
+}
+
+function loadData(){
+  let compressedSerializedData = window.history.state;
+  if (compressedSerializedData.charAt(0)=="?") {
+    compressedSerializedData = compressedSerializedData.substring(1);
+    const serializedData = decompressUrlSafe(compressedSerializedData)
+    data = JSON.parse(serializedData);
+    
+    isKG = data.isKG;
+    isHP = data.isHP;
+    isMeters = data.isMeters;
+    antiIce = data.antiIce;
+    packs = data.packs;
+
+    availRunway = (isMeters) ? data.availRunway : parseDist(data.availRunway,isMeters);
+    
+    windHeading = data.windHeading;
+    windKts = data.windKts;
+    tow = (isKG) ? data.tow : parseWeight(data.tow,isKG);
+    baro = (isHP) ? data.baro : parseQNH(data.baro, isHP);
+
+    oat = data.oat;
+    flaps = data.flaps;
+    runwayHeading = data.runwayHeading;
+    runwayAltitude = data.runwayAltitude;
+
+    // TODO: Set values into forms.
+
+    calculateFlexDist();
+
+  } else return false;
+}
+
 function onUpdate(){
   
   isKG = iKG.checked();
@@ -102,7 +148,6 @@ function onUpdate(){
   windKts = Number(iwindspeed.value());
   tow = (isKG) ? Number(itow.value()) : Number(parseWeight(itow.value(),isKG));
   baro = (isHP) ? Number(ibaro.value()) : Number(parseQNH(ibaro.value(), isHP));
-  console.log(baro);
 
   oat = Number(ioat.value());
   flaps = 0;
@@ -122,11 +167,7 @@ function onUpdate(){
     case "1 + F":
       flaps = 1;
   }
-  /*
-  "A320-200n");
-  iairframe.option("A330-900n");
-  */
-  
+
   switch(iairframe.value()){
     case "A330-900n":
       currentAircraft = a339;
@@ -135,6 +176,25 @@ function onUpdate(){
     case "A320-200n":
       currentAircraft = a20n;
   }
+  data = {
+    "isKG": isKG,
+    "isHP": isHP,
+    "isMeters": isMeters,
+    "availRunway": availRunway,
+    "windHeading": windHeading,
+    "windKts": windKts,
+    "tow": tow,
+    "baro": baro,
+    "oat": oat,
+    "flaps": flaps,
+    "runwayHeading": runwayHeading,
+    "runwayAltitude": runwayAltitude,
+    "antiIce": antiIce,
+    "packs": packs,
+    "currentAircraft": currentAircraft
+  };
+
+  saveData(data);
 
   isKG = true;
   isHP = true;
