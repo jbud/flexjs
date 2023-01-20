@@ -343,23 +343,25 @@ function lsft(known_y, known_x, offset_x = 0)
 {
     if (known_y.length != known_x.length) return false; 
     
-    var numPoints = known_y.length;
-    var x1=0, y1=0, xy=0, x2=0, J, M, B;
+    let numPoints = known_y.length;
+    let x1=0, y1=0, xy=0, x2=0, J, M, B;
+  
     for (var i = 0; i < numPoints; i++)
     {
         known_x[i] -= offset_x;
-        x1 = x1 + known_x[i];
-        y1 = y1 + known_y[i];
-        xy = xy + known_x[i] * known_y[i];
-        x2 = x2 + known_x[i] * known_x[i];
+        x1 += known_x[i];
+        y1 += known_y[i];
+        xy += known_x[i] * known_y[i];
+        x2 += known_x[i] * known_x[i];
     }
 
     J = (numPoints * x2) - (x1 * x1);
-    if (J != 0.0)
-    {
-        M = ((numPoints * xy) - (x1 * y1)) / J;
-        B = ((y1 * x2) - (x1 * xy)) / J;
-    }
+  
+    if (J === 0) return false;
+
+    M = ((numPoints * xy) - (x1 * y1)) / J;
+    B = ((y1 * x2) - (x1 * xy)) / J;
+  
     return [M,B];
 }
 
