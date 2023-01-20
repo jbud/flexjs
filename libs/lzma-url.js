@@ -19,7 +19,7 @@ const __4294967296 = 4294967296,
   P0_longLit = [0, 0],
   P1_longLit = [1, 0]
 
-function add(a, b) {
+function vadd(a, b) {
   return vcreate(a[0] + b[0], a[1] + b[1])
 }
 
@@ -152,7 +152,7 @@ function shru(a, n) {
   n &= 63
   sr = shr(a, n)
   if (a[1] < 0) {
-    sr = add(sr, shl([2, 0], 63 - n))
+    sr = vadd(sr, shl([2, 0], 63 - n))
   }
   return sr
 }
@@ -991,7 +991,7 @@ function $CodeOneChunk(this$static) {
     }
     $PutByte(this$static.m_OutWindow, this$static.prevByte)
     this$static.state = StateUpdateChar(this$static.state)
-    this$static.nowPos64 = add(this$static.nowPos64, P1_longLit)
+    this$static.nowPos64 = vadd(this$static.nowPos64, P1_longLit)
   } else {
     if (
       $DecodeBit(
@@ -1100,7 +1100,7 @@ function $CodeOneChunk(this$static) {
       return -1
     }
     $CopyBlock(this$static.m_OutWindow, this$static.rep0, len)
-    this$static.nowPos64 = add(this$static.nowPos64, fromInt(len))
+    this$static.nowPos64 = vadd(this$static.nowPos64, fromInt(len))
     this$static.prevByte = $GetByte(this$static.m_OutWindow, 0)
   }
   return 0
@@ -1418,7 +1418,7 @@ function $CodeOneBlock(this$static, inSize, outSize, finished) {
     )
     this$static._previousByte = curByte
     --this$static._additionalOffset
-    this$static.nowPos64 = add(this$static.nowPos64, P1_longLit)
+    this$static.nowPos64 = vadd(this$static.nowPos64, P1_longLit)
   }
   if (!$GetNumAvailableBytes(this$static._matchFinder)) {
     $Flush(this$static, lowBits_0(this$static.nowPos64))
@@ -1600,7 +1600,7 @@ function $CodeOneBlock(this$static, inSize, outSize, finished) {
       )
     }
     this$static._additionalOffset -= len
-    this$static.nowPos64 = add(this$static.nowPos64, fromInt(len))
+    this$static.nowPos64 = vadd(this$static.nowPos64, fromInt(len))
     if (!this$static._additionalOffset) {
       if (this$static._matchPriceCount >= 128) {
         $FillDistancesPrices(this$static)
@@ -2961,7 +2961,7 @@ function $Encode_3(this$static, probs, index, symbol) {
     this$static.Range = newBound
     probs[index] = ((prob + ((2048 - prob) >>> 5)) << 16) >> 16
   } else {
-    this$static.Low = add(
+    this$static.Low = vadd(
       this$static.Low,
       and(fromInt(newBound), [4294967295, 0])
     )
@@ -2978,7 +2978,7 @@ function $EncodeDirectBits(this$static, v, numTotalBits) {
   for (var i = numTotalBits - 1; i >= 0; --i) {
     this$static.Range >>>= 1
     if (((v >>> i) & 1) == 1) {
-      this$static.Low = add(this$static.Low, fromInt(this$static.Range))
+      this$static.Low = vadd(this$static.Low, fromInt(this$static.Range))
     }
     if (!(this$static.Range & -16777216)) {
       this$static.Range <<= 8
@@ -2988,7 +2988,7 @@ function $EncodeDirectBits(this$static, v, numTotalBits) {
 }
 
 function $GetProcessedSizeAdd(this$static) {
-  return add(add(fromInt(this$static._cacheSize), this$static._position), [
+  return vadd(vadd(fromInt(this$static._cacheSize), this$static._position), [
     4,
     0
   ])
@@ -3006,7 +3006,7 @@ function $ShiftLow(this$static) {
   var temp,
     LowHi = lowBits_0(shru(this$static.Low, 32))
   if (LowHi != 0 || compare(this$static.Low, [4278190080, 0]) < 0) {
-    this$static._position = add(
+    this$static._position = vadd(
       this$static._position,
       fromInt(this$static._cacheSize)
     )
