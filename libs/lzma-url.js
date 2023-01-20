@@ -3185,7 +3185,7 @@ function compressUrlSafe(
   const compressedString = compress(string, { mode, enableEndMark })
   const compressedBytes = new Uint8Array(compressedString)
 
-  return base64.encodeFromArrayUrlSafe(compressedBytes)
+  return encodeFromArrayUrlSafe(compressedBytes)
 }
 
 /**
@@ -3209,5 +3209,5 @@ function decompress(bytes) {
  * @returns {string}
  */
 function decompressUrlSafe(string) {
-  return decompress(new Int8Array(base64.decodeToArrayUrlSafe(string)))
+  return decompress(new Int8Array(decodeToArrayUrlSafe(string)))
 }
