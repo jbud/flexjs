@@ -20,7 +20,7 @@ const __4294967296 = 4294967296,
   P1_longLit = [1, 0]
 
 function add(a, b) {
-  return create(a[0] + b[0], a[1] + b[1])
+  return vcreate(a[0] + b[0], a[1] + b[1])
 }
 
 function initDim(len) {
@@ -55,7 +55,7 @@ function compare(a, b) {
   return 1
 }
 
-function create(valueLow, valueHigh) {
+function vcreate(valueLow, valueHigh) {
   var diffHigh, diffLow
   valueHigh %= 1.8446744073709552e19
   valueLow %= 1.8446744073709552e19
@@ -144,7 +144,7 @@ function shr(a, n) {
   var shiftFact
   n &= 63
   shiftFact = pwrAsDouble(n)
-  return create(Math.floor(a[0] / shiftFact), a[1] / shiftFact)
+  return vcreate(Math.floor(a[0] / shiftFact), a[1] / shiftFact)
 }
 
 function shru(a, n) {
@@ -157,7 +157,7 @@ function shru(a, n) {
   return sr
 }
 function sub(a, b) {
-  return create(a[0] - b[0], a[1] - b[1])
+  return vcreate(a[0] - b[0], a[1] - b[1])
 }
 
 function $ByteArrayInputStream(this$static, buf) {
