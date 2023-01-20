@@ -97,7 +97,7 @@ function setup() {
 function saveData(data){
   const serializedData = JSON.stringify(data);
   const compressedSerializedData = compressUrlSafe(serializedData);
-  window.history.pushState("?"+compressedSerializedData);
+  window.history.pushState("?"+compressedSerializedData, "", "?"+compressedSerializedData);
 
 }
 
