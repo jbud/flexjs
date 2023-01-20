@@ -91,6 +91,8 @@ function setup() {
   icalculate = createButton("Calculate");
   icalculate.position((width - inpSize) / 1.5,  (height + 80)*2 -50);
   icalculate.mousePressed(onUpdate);
+  
+  loadData();
 }
 
 function saveData(data){
@@ -108,27 +110,40 @@ function loadData(){
     const serializedData = decompressUrlSafe(compressedSerializedData)
     data = JSON.parse(serializedData);
     
-    isKG = data.isKG;
-    isHP = data.isHP;
-    isMeters = data.isMeters;
-    antiIce = data.antiIce;
-    packs = data.packs;
+    iKG.checked(data.isKG);
+    iHP.checked(data.isHP);
+    iM.checked(data.isMeters);
+    iantiice.value((data.antiIce) ? "ON" : "OFF");
+    ipacks.value((data.packs) ? "ON" : "OFF");
+    ilength.value(data.availRunway);
+    iwinddir.value(data.windHeading);
+    iwindspeed.value(data.windKts);
+    itow.value(data.tow);
+    ibaro.value(data.baro);
+    ioat.value(data.oat);
 
-    availRunway = (isMeters) ? data.availRunway : parseDist(data.availRunway,isMeters);
-    
-    windHeading = data.windHeading;
-    windKts = data.windKts;
-    tow = (isKG) ? data.tow : parseWeight(data.tow,isKG);
-    baro = (isHP) ? data.baro : parseQNH(data.baro, isHP);
+    let f;
+    switch(data.flaps){
+      case 2:
+        f = "2";
+        break;
+      case 3:
+        f = "3";
+        break;
+      default:
+      case 1:
+        f = "1 + F";
+    }
 
-    oat = data.oat;
-    flaps = data.flaps;
-    runwayHeading = data.runwayHeading;
-    runwayAltitude = data.runwayAltitude;
+    iflaps.selected(f);
+    iheading.value(data.runwayHeading);
+    ialtitude.value(data.runwayAltitude);
 
     // TODO: Set values into forms.
 
-    calculateFlexDist();
+    onUpdate();
+
+    //calculateFlexDist();
 
   } else return false;
 }
@@ -203,7 +218,6 @@ function onUpdate(){
 }
 
 function draw() {
-  loadData();
   let height = 130;
   background(0)
   fill('white');
