@@ -1,5 +1,3 @@
-
-
 let inpSize = 100;
 let textOffset = 275;
 
@@ -105,6 +103,7 @@ function saveData(data){
 
 function loadData(){
   let compressedSerializedData = window.history.state;
+  if (!compressedSerializedData) return false;
   if (compressedSerializedData.charAt(0)=="?") {
     compressedSerializedData = compressedSerializedData.substring(1);
     const serializedData = decompressUrlSafe(compressedSerializedData)
