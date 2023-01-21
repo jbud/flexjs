@@ -1,5 +1,6 @@
 const BARO_SEA = 1013; // 29.92 inhg
 
+// credit to Paul Gale (https://flightsim.to/profile/galeair) for raw data and trend seeds
 let a20n = {
   isaInc: 15,
   vrisa: 142,
@@ -25,6 +26,7 @@ let a20n = {
   to8k: 2330
 };
 
+// credit to Paul Gale (https://flightsim.to/profile/galeair) for raw data and trend seeds
 let a339 = {
     isaInc: 15,
     vrisa: 150,
@@ -115,6 +117,7 @@ function calculateDensityCorrection(density, AltCorrectionsTable, perfDistDiffTa
     return (densityCorrection >= 0) ? densityCorrection : 0;
 }
 
+// credit to Paul Gale (https://flightsim.to/profile/galeair) for raw data and trend seeds
 function plantSeeds(perfWeight, a) {
     let seedModifierstd=0;
     let seedModifierisa=0;
@@ -142,6 +145,7 @@ function plantSeeds(perfWeight, a) {
     return [seedModifierstd, seedModifierisa];
 }
 
+// credit to Paul Gale (https://flightsim.to/profile/galeair) for raw data and trend seeds
 function calculateFlexDist(){
   
   let density = calculateDensityAlt();
