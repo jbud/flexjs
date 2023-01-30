@@ -148,10 +148,14 @@ function plantSeeds(perfWeight, a) {
 // credit to Paul Gale (https://flightsim.to/profile/galeair) for raw data and trend seeds
 function calculateFlexDist(){
   
-  let density = calculateDensityAlt();
+  let density = (
+    runwayAltitude +
+    (BARO_SEA - baro) * 27 +
+    (oat - (15 - (runwayAltitude / 1000) * 2)) * 120
+  );
   
   let TREF = currentAircraft.trefaice + (runwayAltitude / 1000 * 2);
-  let ISA = calculateISA();
+  let ISA = oat - 15 + (runwayAltitude / 1000) * 1.98;
   
   let flexTrendModifierTable = [
     oat,
@@ -407,16 +411,4 @@ function growth ( known_y, known_x, new_x, use_const ) {
         new_y.push( Math.exp( talpha + tbeta * new_x[i] ) );
     }
     return new_y;
-}
-
-function calculateDensityAlt() {
-  return (
-    runwayAltitude +
-    (BARO_SEA - baro) * 27 +
-    (oat - (15 - (runwayAltitude / 1000) * 2)) * 120
-  );
-}
-
-function calculateISA() {
-  return oat - 15 + (runwayAltitude / 1000) * 1.98;
 }
