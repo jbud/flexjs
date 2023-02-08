@@ -135,7 +135,7 @@ function cgUpdate() {
 }
 
 function rwcondChange(){
-  if (irwcond.value("Contaminated"))
+  if (irwcond.value() == "Contaminated")
     toga = true;
   else 
     toga = false;
