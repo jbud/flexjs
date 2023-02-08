@@ -37,6 +37,19 @@ const takeoff = [
     } // Conf 3
 ];
 
+let V1Speed, V2Speed, VRSpeed;
+
+function CalculateVSpeeds(availRunway, requiredRunway, Weight, Flaps, RunwayAlt, ASD = 1621){
+    this.v2Speed(Weight, Flaps, RunwayAlt);
+    this.vRSpeed();
+    this.v1Speed(Weight, Flaps, RunwayAlt, availRunway, requiredRunway, ASD);
+    return {
+        v1: V1Speed, 
+        vr: VRSpeed, 
+        v2: V2Speed,
+    };
+}
+
 function round5up(x) {
     return Math.ceil(x/5)*5;
 }
@@ -59,9 +72,18 @@ function v2(w, f, a) {
         return v2 + f2corr(f,a);
     }
     v2diff = (v2) - (takeoff[f-1][round5up(w)]);
-    return v2 + Math.ceil((v2diff/5)*distfrom5(w));
+    V2Speed = v2 + Math.ceil((v2diff/5)*distfrom5(w));
+    return V2Speed;
 }
 
 function vr(w, f, a) {
-    return v2(w, f, a) - 4;
+    VRSpeed = (V2Speed != 0) ? V2Speed - 4 : v2(w, f, a) - 4;
+    return VRSpeed;
+}
+
+function v1(w,f,a,ra,rr) {
+    const v1 = ((asd / 2) - (ra - rr)) / 50;
+    let vr = (VRSpeed > 0) ? VRSpeed : vr(w, f, a);
+    V1Speed = (v1 > 0) ? vr - Math.ceil(v1) : vr;
+    return V1Speed;
 }
