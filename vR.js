@@ -83,7 +83,7 @@ function vr(w, f, a) {
 
 function v1(w,f,a,ra,rr, asd) {
     const v1 = ((asd / 2) - (ra - rr)) / 50;
-    let vr = (VRSpeed > 0) ? VRSpeed : vr(w, f, a);
-    V1Speed = (v1 > 0) ? vr - Math.ceil(v1) : vr;
+    let vrs = (VRSpeed > 0) ? VRSpeed : vr(w, f, a);
+    V1Speed = (v1 > 0) ? vrs - Math.ceil(v1) : vrs;
     return V1Speed;
 }
