@@ -1,9 +1,219 @@
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   color: white;
-  background-color: #0A0A0A;
+  background-color: grey;
+  font-family: "Work Sans", sans-serif;
 }
 canvas {
   display: block;
+  margin: 4px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px black;
+}
+#isrwy {
+  visibility: hidden;
+}
+#toga {
+  visibility: hidden;
+}
+#FMC {
+  background-color: black;
+  position: absolute;
+  left: 405px;
+  margin: 4px;
+  width: 275px;
+  height: 225px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px black;
+  font-family: "Sarpanch", sans-serif;
+  color: white;
+  font-size: 15pt;
+  font-weight: bold;
+  -ms-user-select: None;
+  -moz-user-select: None;
+  -webkit-user-select: None;
+  user-select: None;
+  padding-left: 4px;
+  padding-right: 4px;
+  top: 0%;
+}
+
+.small {
+  font-size: 8pt;
+  vertical-align: bottom;
+  line-height: 10px;
+  letter-spacing: 0.2em;
+}
+
+.large {
+  padding-bottom: 7px;
+  vertical-align: top;
+  line-height: 14px;
+}
+
+table {
+  color: white;
+  width: 100%;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+tr {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border: 0;
+}
+
+td {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border: 0;
+}
+
+.orange {
+  color: #FE9A2E;
+  letter-spacing: -0.21em;
+  font-size: 18px;
+}
+
+.green {
+  color: #04B404;
+}
+
+.blue {
+  color: #2ECCFA;
+}
+
+.black {
+  color: #000000;
+}
+
+.red {
+  color: #ff3333;
+}
+.grey {
+  color: #5c5c5c;
+}
+
+p {
+  margin-left: 10px;
+}
+
+h1 {
+  margin-top: 10px;
+  font-size: 20pt;
+  font-family: "Anton", sans-serif;
+  color: #0B0B3B;
+}
+
+hr {
+  margin-top: 0px;
+  border: 1px dotted #0B0B3B;
+  width: 65%;
+}
+
+.center {
+  text-align: center;
+}
+
+.regular {
+  width: 125px;
+}
+
+.thin {
+  width: 60px;
+}
+.myButton {
+  box-shadow: 1px 2px 6px 0px #A6A6A6;
+  background: linear-gradient(to bottom, #545454 5%, #2D2D2D 100%);
+  background-color: #9E9E9E;
+  border-radius: 4px;
+  border: 1px solid #9E9E9E;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 6px 12px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px rgb(0, 0, 0);
+}
+.myButton:hover {
+  background: linear-gradient(to bottom, #607D8B 5%, #607D8B 100%);
+  background-color: #747474;
+}
+.myButton:active {
+  position: relative;
+  box-shadow: 1px 2px 6px 0px #000000;
+  top: 1px;
+}
+
+select {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 15px;
+  width: 100px;
+}
+select {
+  outline: 0;
+  border-radius: 3px;
+  background: #e6e6e6;
+  color: black;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+select::-ms-expand {
+  display: none;
+}
+select:hover {
+  color: #1A1A1A;
+  background: #cccccc;
+}
+select:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.select_arrow {
+  position: absolute;
+  top: 16px;
+  right: 15px;
+  width: 0px;
+  height: 0px;
+  border: solid #7b7b7b;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+select:hover ~ .select_arrow,
+select:focus ~ .select_arrow {
+  border-color: #000000;
+}
+select:disabled ~ .select_arrow {
+  border-top-color: #cccccc;
+}
+input {
+     padding: 1px;
+     font-size: 16px;
+     border-width: 1px;
+     border-color: #969696;
+     background-color: #cccccc;
+     color: #000000;
+     border-style: solid;
+     border-radius: 3px;
+     box-shadow: 0px 0px 5px rgba(66,66,66,.75);
+     text-shadow: 0px 0px 5px rgba(66,66,66,.75);
+}
+input:focus {
+     outline:none;
 }

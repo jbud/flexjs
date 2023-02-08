@@ -40,9 +40,9 @@ const takeoff = [
 let V1Speed, V2Speed, VRSpeed;
 
 function CalculateVSpeeds(availRunway, requiredRunway, Weight, Flaps, RunwayAlt, ASD = 1621){
-    this.v2Speed(Weight, Flaps, RunwayAlt);
-    this.vRSpeed();
-    this.v1Speed(Weight, Flaps, RunwayAlt, availRunway, requiredRunway, ASD);
+    v2(Weight, Flaps, RunwayAlt);
+    vr();
+    v1(Weight, Flaps, RunwayAlt, availRunway, requiredRunway, ASD);
     return {
         v1: V1Speed, 
         vr: VRSpeed, 

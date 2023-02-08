@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Sarpanch&display=swap" rel="stylesheet">
     <script src="libs/p5.js"></script>
     <script src="libs/base64.js"></script>
     <script src="libs/lzma-url.js"></script>
@@ -11,7 +15,129 @@
   </head>
   <body>
     <main>
+      <div id="FMC">
+        <table>
+            <tr>
+                <td colspan="4" class="large">
+                    <center>TAKE OFF <span id="isrwy">RWY </span><font class="green"><span id="rwy"></span></font></center>
+                </td>
+            </tr>
+            <tr>
+                <td class="small" width="33%">
+                    V1
+                </td>
+                <td colspan="2" class="small">
+                    FLP RETR
+                </td>
+                <td class="small">
+                </td>
+            </tr>
+            <tr>
+                <td  class="large">
+                    <font id="v1f" class="orange"><span id="v1">&#9744;&#9744;&#9744;</span></font>
+                </td>
+                <td  class="large">
+                    F=<font class="green">XXX<font>
+                </td>
+                <td  class="large">
+                </td>
+            </tr>
+            <tr>
+                <td class="small">
+                    VR
+                </td>
+                <td colspan="2" class="small">
+                    SLT RETR
+                </td>
+                <td class="small" align="right">
+                    TO SHIFT
+                </td>
+            </tr>
+            <tr>
+                <td  class="large">
+                    <font id="vrf" class="orange"><span id="vr">&#9744;&#9744;&#9744;</span></font>
+                </td>
+                <td  class="large" colspan="2">
+                    S=<font class="green">XXX<font>
+                </td>
+                <td  class="large" align="right">
+                    <font class="grey">[M][&nbsp;&nbsp;&nbsp;]*</font>
+                </td>
+            </tr>
+            <tr>
+                <td class="small">
+                    V2
+                </td>
+                <td colspan="2" class="small">
+                    CLEAN
+                </td>
+                <td class="small" align="right">
+                    FLAPS/THS
+                </td>
+            </tr>
+            <tr>
+                <td  class="large">
+                    <font id="v2f" class="orange"><span id="v2">&#9744;&#9744;&#9744;</span></font>
+                </td>
+                <td  class="large" colspan="2">
+                    O=<font class="green">XXX<font>
+                </td>
+                <td  class="large" align="right">
+                    <font class="blue"><span id="flaps">[&nbsp;&nbsp;]</span>/<span id="ths">[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</span></font>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="small">
+                    TRANS ALT
+                </td>
+                <td colspan="2" class="small" align="right">
+                    FLEX TO TEMP
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="large">
+                    <font class="blue">XXXX</font>
+                </td>
+                <td colspan="2" class="large" align="right">
+                    <font class="blue"><span id="flex">[&nbsp;&nbsp;&nbsp;]</span>&deg;</font>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="small">
+                    THR RED/ACC
+                </td>
+                <td colspan="2" class="small" align="right">
+                    ENG OUT ACC
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="small">
+                    <font class="blue">XXXX/XXXX</font>
+                </td>
+                <td colspan="2" class="small" align="right">
+                    <font class="blue">XXXX</font>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="small">
+                    <font class="grey">UPLINK</font>
+                </td>
+                <td colspan="2" class="small" align="right">
+                    NEXT&nbsp;&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="large">
+                    <font class="grey">&lt;TO DATA</font>
+                </td>
+                <td colspan="2" class="large" align="right">
+                    PHASE&gt;
+                </td>
+            </tr>
+        </table>
+      </div>
     </main>
+    <script src="vR.js"></script>
     <script src="flex.js"></script>
     <script src="sketch.js"></script>
   </body>

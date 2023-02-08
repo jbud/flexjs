@@ -14,6 +14,8 @@ let ipacks;
 let icalculate;
 let iflaps;
 let iairframe;
+let icg;
+let irwcond;
 
 let iKG,iHP,iM, outf, outd;
 let inpoffsetw = 15;
@@ -21,8 +23,8 @@ let inpoffsetw = 15;
 let data = {};
 
 function setup() {
-  createCanvas(400, 400);
-  let height = 130;
+  createCanvas(400, 420);
+  let height = 134;
   background(0);
   fill('white');
   textSize(24);
@@ -75,6 +77,21 @@ function setup() {
   iflaps.option("1 + F");
   iflaps.option("2");
   iflaps.option("3");
+  iflaps.changed(flapsChange);
+
+  icg = createInput("");
+  icg.style("background-color", color("grey"));
+  icg.position(((width - inpSize) / 2) + inpoffsetw, 250 + height / 2);
+  icg.size(inpSize);
+  icg.input(cgUpdate)
+
+
+  irwcond = createSelect();
+  irwcond.position(((width - inpSize) / 2) + inpoffsetw, 280 + height / 2);
+  irwcond.option("Dry");
+  irwcond.option("Wet");
+  irwcond.option("Contaminated");
+  irwcond.changed(rwcondChange);
   
   iairframe = createSelect();
   iairframe.position((width - inpSize) / 3,  (height + 80)*2 -45);
@@ -89,12 +106,50 @@ function setup() {
   iM.position(((width - inpSize+textOffset-50) / 2) + inpoffsetw, 10 + height / 2);
   
   icalculate = createButton("Calculate");
-  icalculate.position((width - inpSize) / 1.5,  (height + 80)*2 -50);
+  icalculate.position((width - inpSize +10) / 1.5,  (height + 80)*2 -50);
   icalculate.mousePressed(onUpdate);
+  icalculate.class("myButton")
   
   loadData();
 }
+function cgUpdate() {
+  let cg320 = {
+    CGMin: 17,
+    CGMax: 40,
+    TrimMin: -2.5,
+    TrimMax: 3.8
+  };
+  let cg = icg.value();
+  
+  let magic1 = (cg320.TrimMin - cg320.TrimMax) / (cg320.CGMax - cg320.CGMin);
 
+  let magic2 = cg320.TrimMax - cg320.CGMin * magic1;
+
+  let CalculatedTrim = magic1 * cg + magic2;
+  if (CalculatedTrim < 0) {
+    Trim = Math.abs(CalculatedTrim.toFixed(1)) + " DN";
+  } else {
+    Trim = Math.abs(CalculatedTrim.toFixed(1)) + " UP";
+  }
+  document.getElementById("ths").innerHTML = Trim;
+}
+
+function rwcondChange(){
+  if (irwcond.value("Contaminated"))
+    toga = true;
+  else 
+    toga = false;
+}
+
+function flapsChange(){
+  switch(iflaps.value()){
+    case "1 + F":
+      document.getElementById("flaps").innerHTML = 1;
+      break;
+      default:
+      document.getElementById("flaps").innerHTML = iflaps.value();
+  }
+}
 function saveData(data){
   const serializedData = JSON.stringify(data);
   const compressedSerializedData = compressUrlSafe(serializedData);
@@ -213,8 +268,20 @@ function onUpdate(){
   isMeters = true;
   
   calculateFlexDist();
-  
-  
+  let vspeeds = CalculateVSpeeds(availRunway, requiredRunway, tow, flaps, runwayAltitude, 1621);
+  document.getElementById("v1").innerHTML = vspeeds.v1;
+  document.getElementById("v1f").className = "blue";
+  document.getElementById("vr").innerHTML = vspeeds.vr;
+  document.getElementById("vrf").className = "blue";
+  document.getElementById("v2").innerHTML = vspeeds.v2;
+  document.getElementById("v2f").className = "blue";
+  document.getElementById("flex").innerHTML = flex;
+  if (toga){
+    document.getElementById("toga").style.visibility ="visible";
+  } else {
+    document.getElementById("toga").style.visibility ="hidden";
+  }
+  flapsChange();
 }
 
 function draw() {
@@ -240,21 +307,8 @@ function draw() {
   text("Anti-Ice",(width - inpSize-textOffset) / 2, 180 + height / 2);
   text("Packs",(width - inpSize-textOffset) / 2, 210 + height / 2);
   text("Flaps",(width - inpSize-textOffset) / 2, 240 + height / 2);
-  let ftext = (flex > 0) ? flex + "°" : "";
-  let dtext = (requiredRunway>0) ? Math.ceil(requiredRunway) + "m" : "";
-  let outcol = 'lime';
   
-  if (requiredRunway > availRunway | flex < 0) 
-  {
-      outcol = 'red';
-      ftext = "Error.";
-      dtext = "";
-  }
-  
-  text("Flex to temp:", (width - inpSize-textOffset) / 2, 270 + height / 2);
-  text("Dist Used:", (width - inpSize-textOffset) / 2, 300 + height / 2);
-  fill(outcol);
-  text(ftext,((width - inpSize) / 2) + inpoffsetw,270 + height / 2);
-  text(dtext,((width - inpSize) / 2) + inpoffsetw,300 + height / 2);
+  text("CG%", (width - inpSize-textOffset) / 2, 270 + height / 2);
+  text("RW Cond.", (width - inpSize-textOffset) / 2, 300 + height / 2);
   
 }

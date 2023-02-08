@@ -71,7 +71,8 @@ let runwayHeading = 10;
 let runwayAltitude = 31;
 let antiIce = true;
 let packs = false;
-
+let togaRequiredRunway;
+let toga = false;
 
 let v1offsele0; // "VR"
 
@@ -253,7 +254,7 @@ function calculateFlexDist(){
   let totDist = windLen;
   totDist += (antiIce) ? ((windLen /100)*3) : 0;
   totDist += (packs) ? ((windLen /100)*4) : 0;
-  
+  togaRequiredRunway = totDist;
   flapWindAIPackCorrection = totDist / (isaCorrection/100);
   
   // do i need this?
@@ -309,8 +310,8 @@ function calculateFlexDist(){
     ]
   );
   
-  flex = flexTrendTable[6];
-  requiredRunway = TakeoffDistanceTrendTable[4];
+  flex = (toga) ? "[&nbsp;&nbsp;&nbsp;]" : flexTrendTable[6];
+  requiredRunway = (toga) ? togaRequiredRunway : TakeoffDistanceTrendTable[4];
 }
 
 function calculateFlapEffect(){
