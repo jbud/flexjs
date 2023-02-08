@@ -110,7 +110,7 @@ function setup() {
   icalculate.mousePressed(onUpdate);
   icalculate.class("myButton")
   
-  loadData();
+  //loadData();
 }
 function cgUpdate() {
   let cg320 = {
@@ -265,7 +265,7 @@ function onUpdate(){
     "irwcond": irwcond,
   };
 
-  saveData(data);
+  //saveData(data);
 
   isKG = true;
   isHP = true;
