@@ -127,9 +127,9 @@ function cgUpdate() {
 
   let CalculatedTrim = magic1 * cg + magic2;
   if (CalculatedTrim < 0) {
-    Trim = Math.abs(CalculatedTrim.toFixed(1)) + " DN";
+    Trim = Math.abs(CalculatedTrim.toFixed(1)) + "DN";
   } else {
-    Trim = Math.abs(CalculatedTrim.toFixed(1)) + " UP";
+    Trim = Math.abs(CalculatedTrim.toFixed(1)) + "UP";
   }
   document.getElementById("ths").innerHTML = Trim;
 }
@@ -176,6 +176,8 @@ function loadData(){
     itow.value(data.tow);
     ibaro.value(data.baro);
     ioat.value(data.oat);
+    icg.value(data.icg);
+    irwcond.value(data.irwcond);
 
     let f;
     switch(data.flaps){
@@ -258,7 +260,9 @@ function onUpdate(){
     "runwayAltitude": runwayAltitude,
     "antiIce": antiIce,
     "packs": packs,
-    "currentAircraft": currentAircraft
+    "currentAircraft": currentAircraft,
+    "icg": icg,
+    "irwcond": irwcond,
   };
 
   saveData(data);
