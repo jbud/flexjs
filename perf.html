@@ -1,0 +1,367 @@
+
+<html>
+	<head>
+<style>
+    body			{	font-family: 'Work Sans', sans-serif;
+				}
+
+#maincontainer 	{	width: 100%;
+					height: 100%;
+				}
+
+#mainbox		{	position: relative;
+					width: 800px;
+					margin-top: 25px;
+					left: 50%;
+					margin-left: -400px;
+					background-color: #E6E6E6;
+					border: 1px solid black;
+				}
+#isrwy          {   visibility:hidden;
+                }				
+#FMC			{	background-color: black;
+					width: 275px;
+					height: 225px;
+					border-radius: 5px;
+					box-shadow: 0px 0px 5px black;
+					font-family: 'Sarpanch', sans-serif;
+					color: white;
+					font-size: 15pt;
+					font-weight: bold;
+					-ms-user-select: None;
+					-moz-user-select: None;
+					-webkit-user-select: None;
+					user-select: None; 
+					padding-left: 4px;
+					padding-right: 4px;
+					top: 0%;
+				}
+				
+#kleinerlink	{	text-decoration:none;
+					color: #08088A;
+				}
+				
+#kleinerlink:hover	
+				{	text-decoration:underline;
+					color: red;
+				}
+				
+#disclaimer		{	background-color: red;
+					color: white;
+					padding: 10px;
+					position: relative;
+					left: 50%;
+					width: 400px;
+					margin-left: -200px;
+					margin-top: 25px;
+					text-align: center;
+					font-weight: bold;
+				}
+				
+#footer			{	position: fixed;
+					bottom: 0;
+					height: 30px;
+					text-align: center;
+					width: 100%;
+					color: grey;
+					font-size: 10pt;
+				}
+
+#footer a		{ 	color: grey;
+					text-decoration: none;
+				}
+				
+#footer a:hover	{	text-decoration: underline;
+				}
+				
+.small			{	font-size: 8pt;
+					vertical-align: bottom;
+					line-height: 10px;
+					letter-spacing: 0.2em;
+				}
+				
+.large			{	padding-bottom: 7px;
+					vertical-align: top;
+					line-height: 14px;
+				}
+				
+table			{	color: white;
+					width: 100%;
+					border: 0;
+					margin: 0;
+					padding: 0;
+				}
+
+tr				{ 	margin-top: 0px;
+					margin-bottom: 0px;
+					padding-top: 0px;
+					padding-bottom: 0px;
+					border: 0;
+				}
+				
+td				{ 	margin-top: 0px;
+					margin-bottom: 0px;
+					padding-top: 0px;
+					padding-bottom: 0px;
+					border: 0;
+				}
+				
+.orange			{	color:#FE9A2E;
+                    letter-spacing: -0.21em;
+                    font-size: 18px;
+				}
+				
+.green			{	color:#04B404;
+				}
+				
+.blue			{	color:#2ECCFA;
+				}
+				
+.black			{	color:#000000;
+				}
+				
+.red			{ 	color:#ff3333;
+				}
+.grey           {   color:#5c5c5c;
+                }
+				
+p				{	margin-left: 10px;
+				}
+				
+h1				{	margin-top: 10px;
+					font-size: 20pt;
+					font-family: 'Anton', sans-serif;
+					color: #0B0B3B;
+					/*
+					background-image:linear-gradient(80deg,#08088A,#A9E2F3,#FFFFFF);
+					-webkit-background-clip: text;
+					-webkit-text-fill-color: transparent;
+					-webkit-text-stroke:1px #000000;
+					*/
+					margin-bottom: 0px;
+				}
+				
+hr				{	margin-top: 0px;
+					border: 1px dotted #0B0B3B;
+					width: 65%;
+				}
+				
+.center			{	text-align: center;
+				}
+				
+#submitbutton	{	width: 200px;
+					font-family: 'Work Sans', sans-serif;
+					color: white;
+					background-color: #08088A;
+					height: 30px;
+					border: 1px solid white;
+					border-radius: 5px;
+					font-size: 12pt;
+				}
+				
+#metarbutton	{	width: 170px;
+					float:left;
+					font-family: 'Work Sans', sans-serif;
+					color: white;
+					background-color: #08088A;
+					border: 1px solid white;
+					border-radius: 5px;
+					font-size: 10pt;
+					padding:3px;
+					text-decoration:none;
+					text-align: center;
+					margin-left: 5px;
+				}
+				
+#metarinfo 		{	font-size: 10pt;
+					text-align: center;
+				}
+				
+
+				
+#metarbutton a	{	text-decoration:none;	}
+
+a #metarbutton	{	text-decoration:none;	}
+				
+input 			{	font-size: 12pt;
+					font-family: 'Work Sans', sans-serif;
+					width: 125px;
+				}
+				
+select			{	font-size: 12pt;
+					font-family: 'Work Sans', sans-serif;
+				}
+				
+#airporticao	{	float:left;
+					width: 60px;
+				}
+				
+#chooserunway	{	float:left;
+					margin-left: 5px;
+					width: 60px;
+				}
+				
+.regular {	width: 125px;
+				}
+			
+.thin	{	width: 60px;
+				}
+				
+#cgvalues {			display: none;
+					position: absolute;
+					color: black;
+					text-decoration: none;
+					background-color: #BDBDBD;
+					border: 1px solid black;
+					border-radius: 5px;
+					margin-left: 20px;
+					margin-top: 20px;
+					box-shadow: 5px 5px 5px 0px black;
+	
+}
+
+#cgvalues table {	color: black;
+				}
+				
+#cgvalues th	{ 	text-align: left;
+				}
+
+#hovcg {
+					text-decoration: none;
+					color: grey;
+					font-weight: normal;
+}
+
+#hovcg:hover #cgvalues {
+					display: block;
+}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css2?family=Sarpanch&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="FMC">
+    <table>
+        <tr>
+            <td colspan="4" class="large">
+                <center>TAKE OFF <span id="isrwy">RWY </span><font class="green"><span id="rwy"></span></font></center>
+            </td>
+        </tr>
+        <tr>
+            <td class="small" width="33%">
+                V1
+            </td>
+            <td colspan="2" class="small">
+                FLP RETR
+            </td>
+            <td class="small">
+            </td>
+        </tr>
+        <tr>
+            <td  class="large">
+                <font id="v1f" class="orange"><span id="v1">&#9744;&#9744;&#9744;</span></font>
+            </td>
+            <td  class="large">
+                F=<font class="green">XXX<font>
+            </td>
+            <td  class="large">
+            </td>
+        </tr>
+        <tr>
+            <td class="small">
+                VR
+            </td>
+            <td colspan="2" class="small">
+                SLT RETR
+            </td>
+            <td class="small" align="right">
+                TO SHIFT
+            </td>
+        </tr>
+        <tr>
+            <td  class="large">
+                <font id="vrf" class="orange"><span id="vr">&#9744;&#9744;&#9744;</span></font>
+            </td>
+            <td  class="large" colspan="2">
+                S=<font class="green">XXX<font>
+            </td>
+            <td  class="large" align="right">
+                <font class="grey">[M][&nbsp;&nbsp;&nbsp;]*</font>
+            </td>
+        </tr>
+        <tr>
+            <td class="small">
+                V2
+            </td>
+            <td colspan="2" class="small">
+                CLEAN
+            </td>
+            <td class="small" align="right">
+                FLAPS/THS
+            </td>
+        </tr>
+        <tr>
+            <td  class="large">
+                <font id="v2f" class="orange"><span id="v2">&#9744;&#9744;&#9744;</span></font>
+            </td>
+            <td  class="large" colspan="2">
+                O=<font class="green">XXX<font>
+            </td>
+            <td  class="large" align="right">
+                <font class="blue"><span id="flaps">[&nbsp;&nbsp;]</span>/<span id="ths">[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</span></font>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="small">
+                TRANS ALT
+            </td>
+            <td colspan="2" class="small" align="right">
+                FLEX TO TEMP
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="large">
+                <font class="blue">XXXX</font>
+            </td>
+            <td colspan="2" class="large" align="right">
+                <font class="blue"><span id="flex">[&nbsp;&nbsp;&nbsp;]</span>&deg;</font>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="small">
+                THR RED/ACC
+            </td>
+            <td colspan="2" class="small" align="right">
+                ENG OUT ACC
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="small">
+                <font class="blue">XXXX/XXXX</font>
+            </td>
+            <td colspan="2" class="small" align="right">
+                <font class="blue">XXXX</font>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="small">
+                <font class="grey">UPLINK</font>
+            </td>
+            <td colspan="2" class="small" align="right">
+                NEXT&nbsp;&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="large">
+                <font class="grey">&lt;TO DATA</font>
+            </td>
+            <td colspan="2" class="large" align="right">
+                PHASE&gt;
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
