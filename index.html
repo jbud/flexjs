@@ -37,7 +37,7 @@
                     <font id="v1f" class="orange"><span id="v1">&#9744;&#9744;&#9744;</span></font>
                 </td>
                 <td  class="large">
-                    F=<font class="green">XXX<font>
+                    F=<font class="green">XXX</font>
                 </td>
                 <td  class="large">
                 </td>
@@ -58,7 +58,7 @@
                     <font id="vrf" class="orange"><span id="vr">&#9744;&#9744;&#9744;</span></font>
                 </td>
                 <td  class="large" colspan="2">
-                    S=<font class="green">XXX<font>
+                    S=<font class="green">XXX</font>
                 </td>
                 <td  class="large" align="right">
                     <font class="grey">[M][&nbsp;&nbsp;&nbsp;]*</font>
@@ -80,7 +80,7 @@
                     <font id="v2f" class="orange"><span id="v2">&#9744;&#9744;&#9744;</span></font>
                 </td>
                 <td  class="large" colspan="2">
-                    O=<font class="green">XXX<font>
+                    O=<font class="green">XXX</font>
                 </td>
                 <td  class="large" align="right">
                     <font class="blue"><span id="flaps">[&nbsp;&nbsp;]</span>/<span id="ths">[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</span></font>
@@ -95,11 +95,11 @@
                 </td>
             </tr>
             <tr>
-              <td colspan="1" class="large">
-                <font class="blue">XXXX</font>
-              </td>
+                <td colspan="1" class="large">
+                    <font class="blue">XXXX</font>
+                </td>
               <td colspan="1" class="large"><span id="toga"><font class="red">TOGA-&gt;</font></span> </td>
-                <td colspan="2" class="large" align="right">
+              <td colspan="2" class="large" align="right">
                     <font class="blue"><span id="flex">[&nbsp;&nbsp;&nbsp;]</span>&deg;</font>
                 </td>
             </tr>
@@ -136,7 +136,122 @@
                 </td>
             </tr>
         </table>
-      </div>
+    </div><svg
+          class="runway"
+          viewbox="0 0 100 1500"
+          width="100%"
+          height="100%"
+          xmlns="http://www.w3.org/2000/svg"
+          style="position: absolute; user-select: none; z-index: 1; transform: scale(3,1) translate(0, 0) rotate(0deg); transform-origin: center 1200px;"
+        >
+          <pattern
+            id="mark10R"
+            x="42"
+            y="81"
+            width="4"
+            height="20"
+            patternunits="userSpaceOnUse"
+          >
+            <line
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="20"
+              stroke-width="3"
+              stroke="#FFFFFF"
+            ></line>
+          </pattern>
+          <defs>
+            <g id="mark110R">
+              <line
+                x1="2.5"
+                y1="0"
+                x2="2.5"
+                y2="25"
+                stroke="#FFFFFF"
+                stroke-width="1"
+              ></line>
+              <line
+                x1="5"
+                y1="0"
+                x2="5"
+                y2="25"
+                stroke="#FFFFFF"
+                stroke-width="1"
+              ></line>
+              <line
+                x1="7.5"
+                y1="0"
+                x2="7.5"
+                y2="25"
+                stroke="#FFFFFF"
+                stroke-width="1"
+              ></line>
+            </g>
+            <g id="mark210R">
+              <line
+                x1="3.75"
+                y1="0"
+                x2="3.75"
+                y2="25"
+                stroke="#FFFFFF"
+                stroke-width="1"
+              ></line>
+              <line
+                x1="7.5"
+                y1="0"
+                x2="7.5"
+                y2="25"
+                stroke="#FFFFFF"
+                stroke-width="1"
+              ></line>
+            </g>
+          </defs>
+          <g>
+            <rect
+              x="40"
+              y="81"
+              width="30"
+              height="1100"
+              stroke="black"
+              stroke-width="2"
+              fill="black"
+              rx="3"
+            ></rect>
+            <rect
+              x="40"
+              y="81"
+              width="30"
+              height="1100"
+              stroke="black"
+              stroke-width="2"
+              rx="3"
+            ></rect>
+            <rect fill="url(#mark10R)" x="40" y="91" width="29" height="25"></rect>
+            <use x="40" y="141" href="#mark110R"></use>
+            <use x="60" y="141" href="#mark110R"></use>
+            <use x="40" y="201" href="#mark210R"></use>
+            <use x="59" y="201" href="#mark210R"></use>
+            <rect fill="url(#mark10R)" x="40" y="91" width="29" height="25"></rect>
+            <rect
+              fill="url(#mark10R)"
+              x="40"
+              y="1141"
+              width="29"
+              height="25"
+            ></rect>
+            <use x="40" y="1096" href="#mark110R"></use>
+            <use x="60" y="1096" href="#mark110R"></use>
+            <use x="40" y="1036" href="#mark210R"></use>
+            <use x="59" y="1036" href="#mark210R"></use>
+            <path
+              stroke="#FFFFFF"
+              stroke-dasharray="25"
+              stroke-width="1"
+              d="M 55,241 L 55,1023"
+            ></path>
+          </g>
+        </svg>
     </main>
     <script src="vR.js"></script>
     <script src="flex.js"></script>
